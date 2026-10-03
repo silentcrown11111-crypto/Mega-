@@ -1,0 +1,1186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Mega Sweets & Bakers — premium sweets, cakes, bakery, restaurant, fast food and cash & carry under one roof. Demo website.">
+<title>Mega Sweets & Bakers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500&family=Manrope:wght@300;400;500;600;700;800&display=swap">
+<style>
+/* Layout concept: a cinematic dark-chocolate stage. Each food world gets its own warm "room" (maroon for mithai,
+   cream for cakes, toasted bakery, charcoal restaurant) connected by gold typography and floating product cutouts. */
+:root{
+  --bg:#120806;          /* deep cocoa */
+  --bg-2:#1c0e09;        /* lifted cocoa */
+  --bg-3:#2a1711;        /* warm brown surface */
+  --maroon:#4a0f1a;      /* mithai room */
+  --maroon-2:#6b1a28;
+  --cream:#f6ead6;       /* cakes room */
+  --cream-2:#efdcc0;
+  --toast:#3a2415;       /* bakery room */
+  --ink:#2a140d;         /* text on cream */
+  --fg:#f6ead6;
+  --fg-soft:rgba(246,234,214,.68);
+  --fg-dim:rgba(246,234,214,.42);
+  --gold:#d9a84e;
+  --gold-2:#f3d48a;
+  --gold-3:#9d7430;
+  --rose:#c6414f;
+  --line:rgba(246,234,214,.12);
+  --glass:rgba(28,14,9,.55);
+  --shadow:0 30px 80px -20px rgba(0,0,0,.65);
+  --font-display:"Fraunces", "Cormorant Garamond", Georgia, serif;
+  --font-body:"Manrope", "Segoe UI", system-ui, sans-serif;
+  --radius:22px;
+  --max:1280px;
+  --gutter:clamp(16px, 4vw, 56px);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--gold);color:#1a0c06}
+:focus-visible{outline:2px solid var(--gold-2);outline-offset:3px}
+.wrap{width:min(var(--max),100% - 2*var(--gutter));margin-inline:auto}
+section{position:relative}
+.section{padding-block:clamp(72px,10vw,140px)}
+
+/* ---------- Typography ---------- */
+.display{font-family:var(--font-display);font-weight:400;line-height:.98;letter-spacing:-.02em;text-wrap:balance;margin:0}
+.display em{font-style:italic;font-weight:300;color:var(--gold-2)}
+.h1{font-size:clamp(44px,7.2vw,104px)}
+.h2{font-size:clamp(36px,5vw,68px)}
+.h3{font-size:clamp(26px,3vw,40px)}
+.eyebrow{font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:12px;margin:0 0 18px}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--gold)}
+.lead{font-size:clamp(17px,1.35vw,20px);color:var(--fg-soft);max-width:60ch;margin:0}
+.lead strong{color:var(--fg);font-weight:600}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:12px;padding:16px 28px;border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.04em;position:relative;isolation:isolate;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;white-space:nowrap}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-gold{background:linear-gradient(135deg,var(--gold-2),var(--gold) 55%,var(--gold-3));color:#1d0d06;box-shadow:0 10px 30px -10px rgba(217,168,78,.6)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 18px 40px -12px rgba(217,168,78,.75)}
+.btn-ghost{border:1px solid var(--line);background:rgba(255,255,255,.03);backdrop-filter:blur(10px)}
+.btn-ghost:hover{border-color:rgba(246,234,214,.4);transform:translateY(-2px)}
+.btn-ink{background:var(--ink);color:var(--cream)}
+.btn-ink:hover{transform:translateY(-2px)}
+.btn-outline-ink{border:1px solid rgba(42,20,13,.35);color:var(--ink)}
+.btn-outline-ink:hover{background:rgba(42,20,13,.06);transform:translateY(-2px)}
+
+/* ---------- Nav ---------- */
+.nav{position:fixed;inset-inline:0;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(18,8,6,.72);backdrop-filter:blur(18px) saturate(140%);border-color:var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:24px;height:78px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,var(--gold-2),var(--gold) 60%,var(--gold-3));display:grid;place-items:center;color:#1d0d06;font-family:var(--font-display);font-weight:700;font-size:24px;box-shadow:0 8px 24px -8px rgba(217,168,78,.6)}
+.logo-text{line-height:1}
+.logo-text b{display:block;font-family:var(--font-display);font-weight:600;font-size:20px;letter-spacing:.02em}
+.logo-text span{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.nav-links{display:flex;gap:30px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-soft)}
+.nav-links a{position:relative;padding:6px 0;transition:color .3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--gold);transition:width .35s}
+.nav-links a:hover{color:var(--fg)}.nav-links a:hover::after{width:100%}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.nav .btn{padding:12px 22px}
+.burger{display:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);place-items:center}
+.burger span{display:block;width:18px;height:2px;background:var(--fg);margin:2.5px 0;transition:.3s}
+.mobile-menu{position:fixed;inset:0;z-index:49;background:rgba(18,8,6,.96);backdrop-filter:blur(20px);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .4s}
+.mobile-menu.open{opacity:1;pointer-events:auto}
+.mobile-menu nav{display:grid;gap:22px;text-align:center;font-family:var(--font-display);font-size:34px}
+.mobile-menu nav a{opacity:.85}
+@media (max-width:980px){.nav-links,.nav-cta .btn-ghost{display:none}.burger{display:grid}}
+
+/* ---------- Hero ---------- */
+.hero{min-height:min(100svh,980px);display:grid;align-items:center;overflow:hidden;padding-top:110px;padding-bottom:40px;isolation:isolate}
+#sugar{position:absolute;inset:0;z-index:-2;opacity:.9}
+.hero-glow{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+   radial-gradient(60% 50% at 75% 45%,rgba(217,168,78,.22),transparent 60%),
+   radial-gradient(40% 40% at 20% 80%,rgba(107,26,40,.45),transparent 65%),
+   radial-gradient(100% 60% at 50% 110%,rgba(0,0,0,.6),transparent 60%)}
+.hero-grid > *{min-width:0}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,60px);align-items:center}
+.hero-copy{position:relative;z-index:2}
+.hero-copy .h1{margin:8px 0 26px}
+.hero-copy .h1 .line{display:block;overflow:hidden}
+.hero-copy .h1 .line > span{display:block;transform:translateY(110%)}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:28px;margin-top:44px;color:var(--fg-dim);font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+.hero-meta b{display:block;color:var(--fg);font-family:var(--font-display);font-size:28px;letter-spacing:0;text-transform:none;font-weight:500;line-height:1}
+.hero-stage{position:relative;height:clamp(420px,52vw,680px);perspective:1400px;perspective-origin:50% 40%}
+.ring{position:absolute;left:50%;top:52%;width:0;height:0;transform-style:preserve-3d;transform:translate(-50%,-50%) rotateX(-16deg)}
+.ring-inner{position:absolute;transform-style:preserve-3d;animation:spin 46s linear infinite}
+.disc{position:absolute;width:var(--d,150px);height:var(--d,150px);margin:calc(var(--d,150px)/-2);border-radius:50%;transform-style:preserve-3d;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.14),rgba(255,255,255,0) 55%),linear-gradient(160deg,#3a1d12,#1a0b07);
+  box-shadow:0 30px 50px -20px rgba(0,0,0,.8),inset 0 0 0 1px rgba(243,212,138,.25);display:grid;place-items:center}
+.disc img{width:86%;height:86%;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(0,0,0,.6))}
+.disc.photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;filter:none}
+.disc .tag{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-2);white-space:nowrap;opacity:.9}
+.centerpiece{position:absolute;left:0;top:0;max-width:none;height:auto;width:clamp(250px,30vw,420px);transform:translate(-50%,-60%);filter:drop-shadow(0 50px 50px rgba(0,0,0,.7));animation:float 7s ease-in-out infinite}
+.plate{position:absolute;left:50%;top:50%;width:clamp(300px,36vw,520px);aspect-ratio:1/.32;transform:translate(-50%,10%);border-radius:50%;z-index:2;
+  background:radial-gradient(ellipse at 50% 40%,rgba(243,212,138,.55),rgba(217,168,78,.18) 45%,rgba(0,0,0,0) 70%);filter:blur(2px)}
+.hero-badge{position:absolute;z-index:4;padding:12px 16px;border-radius:16px;background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--line);display:flex;gap:12px;align-items:center;box-shadow:var(--shadow)}
+.hero-badge i{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));color:#1d0d06;font-style:normal;font-weight:800}
+.hero-badge small{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-dim)}
+.hero-badge b{font-family:var(--font-display);font-size:18px;font-weight:500}
+.badge-1{left:-4%;top:12%}.badge-2{right:-2%;bottom:14%}
+@keyframes spin{to{transform:rotateY(360deg)}}
+@keyframes float{0%,100%{transform:translate(-50%,-60%) rotate(-1deg)}50%{transform:translate(-50%,-65%) rotate(1deg)}}
+.scroll-hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--fg-dim)}
+.scroll-hint i{width:1px;height:46px;background:linear-gradient(var(--gold),transparent);display:block;animation:drop 2s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media (max-width:980px){
+  .hero{padding-top:100px;min-height:auto}
+  .hero-grid{grid-template-columns:1fr;gap:12px}
+  .hero-stage{height:clamp(380px,100vw,520px);order:-1;margin-top:-10px}
+  .badge-1{left:0;top:4%}.badge-2{right:0;bottom:6%}
+  .hero-meta{gap:18px}
+  .scroll-hint{display:none}
+}
+
+/* ---------- Marquee ---------- */
+.marquee{border-block:1px solid var(--line);padding:18px 0;overflow:hidden;background:linear-gradient(90deg,rgba(217,168,78,.06),transparent 30%,transparent 70%,rgba(217,168,78,.06))}
+.marquee-track{display:flex;gap:0;width:max-content;animation:marquee 38s linear infinite}
+.marquee-track span{font-family:var(--font-display);font-size:clamp(20px,2.4vw,30px);font-weight:300;font-style:italic;color:var(--fg-soft);padding:0 34px;display:flex;align-items:center;gap:34px;white-space:nowrap}
+.marquee-track span::after{content:"✦";font-style:normal;font-size:14px;color:var(--gold)}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ---------- About ---------- */
+.about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(32px,6vw,90px);align-items:center}
+.collage{position:relative;height:clamp(420px,46vw,620px)}
+.collage figure{position:absolute;margin:0;overflow:hidden;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid rgba(243,212,138,.18)}
+.collage img{width:100%;height:100%;object-fit:cover;transform:scale(1.08)}
+.c1{left:0;top:6%;width:58%;height:66%}
+.c2{right:0;top:0;width:36%;height:44%}
+.c3{right:6%;bottom:0;width:48%;height:46%}
+.collage .stamp{position:absolute;left:52%;top:62%;width:124px;height:124px;border-radius:50%;background:var(--bg);border:1px solid var(--gold);display:grid;place-items:center;z-index:3;animation:spinslow 20s linear infinite}
+.collage .stamp svg{width:100%;height:100%}
+.collage .stamp text{font-family:var(--font-body);font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;fill:var(--gold)}
+.collage .stamp b{position:absolute;font-family:var(--font-display);font-size:34px;color:var(--gold-2);animation:spinslow 20s linear infinite reverse}
+@keyframes spinslow{to{transform:rotate(360deg)}}
+.about-points{display:grid;grid-template-columns:1fr 1fr;gap:22px 28px;margin-top:40px}
+.about-points div{border-top:1px solid var(--line);padding-top:16px}
+.about-points b{display:block;font-family:var(--font-display);font-size:22px;font-weight:500;margin-bottom:4px}
+.about-points p{color:var(--fg-soft);font-size:14.5px}
+@media (max-width:980px){.about-grid{grid-template-columns:1fr}.collage{height:min(90vw,480px)}}
+@media (max-width:560px){.about-points{grid-template-columns:1fr}}
+
+/* ---------- Categories (bento) ---------- */
+.cats{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:clamp(150px,16vw,220px);gap:14px;margin-top:56px}
+.cat{position:relative;overflow:hidden;border-radius:20px;background:var(--bg-3);border:1px solid var(--line);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s;cursor:pointer;display:block;min-width:0}
+.cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1),filter .6s;filter:saturate(1.05)}
+.cat.cut img{object-fit:contain;padding:12%;transform:translateY(0) scale(1)}
+.cat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,8,6,0) 40%,rgba(18,8,6,.9));opacity:.95;transition:opacity .5s}
+.cat .label{position:absolute;left:20px;right:20px;bottom:18px;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.cat .label b{font-family:var(--font-display);font-weight:500;font-size:clamp(20px,2vw,28px);line-height:1}
+.cat .label small{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.cat .arrow{width:38px;height:38px;border-radius:50%;border:1px solid rgba(243,212,138,.4);display:grid;place-items:center;flex:none;transition:.4s;background:rgba(18,8,6,.4)}
+.cat:hover{box-shadow:0 40px 70px -30px rgba(0,0,0,.8),0 0 0 1px rgba(243,212,138,.35)}
+.cat:hover img{transform:scale(1.08)}
+.cat.cut:hover img{transform:scale(1.1) rotate(-4deg)}
+.cat:hover .arrow{background:var(--gold);color:#1d0d06;border-color:var(--gold)}
+.cat.wide{grid-column:span 6}.cat.med{grid-column:span 4}.cat.small{grid-column:span 3}.cat.tall{grid-row:span 2}
+@media (max-width:980px){.cat.wide,.cat.med{grid-column:span 6}.cat.small{grid-column:span 6}}
+@media (max-width:560px){.cats{grid-auto-rows:150px}.cat.wide{grid-column:span 12}.cat.med,.cat.small{grid-column:span 6}.cat.tall{grid-row:span 1}}
+
+/* ---------- Pinned story ---------- */
+.story{background:linear-gradient(180deg,var(--bg),#160a08 30%,var(--bg))}
+.story-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:start}
+.story-stage{position:sticky;top:0;height:100vh;height:100svh;display:grid;place-items:center}
+.stage-frame{position:relative;width:min(100%,560px);aspect-ratio:4/5;max-height:78vh}
+.stage-frame .shot{position:absolute;inset:0;border-radius:28px;overflow:hidden;opacity:0;transform:scale(.94) rotate(-1.5deg);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform 1.1s cubic-bezier(.2,.8,.2,1);box-shadow:var(--shadow);border:1px solid rgba(243,212,138,.18)}
+.stage-frame .shot img{width:100%;height:100%;object-fit:cover}
+.stage-frame .shot.on{opacity:1;transform:none}
+.stage-frame .shot::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(18,8,6,.55))}
+.stage-frame .float{position:absolute;width:38%;z-index:3;filter:drop-shadow(0 30px 30px rgba(0,0,0,.7));opacity:0;transform:translateY(30px) scale(.8);transition:opacity .7s .2s,transform .9s .2s cubic-bezier(.2,.8,.2,1)}
+.stage-frame .float.on{opacity:1;transform:none}
+.f-a{right:-10%;top:-6%}.f-b{left:-12%;bottom:8%}
+.stage-caption{position:absolute;left:24px;bottom:24px;z-index:4;display:flex;gap:14px;align-items:center}
+.stage-caption b{font-family:var(--font-display);font-size:26px;font-weight:500}
+.stage-caption .idx{width:42px;height:42px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;font-size:12px;letter-spacing:.1em;color:var(--gold-2)}
+.story-steps{padding-block:20vh}
+.step{min-height:70vh;display:flex;flex-direction:column;justify-content:center;opacity:.25;transition:opacity .5s}
+.step.on{opacity:1}
+.step .h2{margin:10px 0 20px}
+.step ul{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:12px}
+.step li{display:flex;gap:14px;align-items:flex-start;color:var(--fg-soft)}
+.step li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold);flex:none;margin-top:9px;box-shadow:0 0 0 4px rgba(217,168,78,.18)}
+@media (max-width:980px){
+  .f-a{right:2%}.f-b{left:2%}
+  .story-wrap{grid-template-columns:1fr}
+  .story-stage{position:relative;height:auto;padding-top:60px}
+  .stage-frame{aspect-ratio:1/1;max-height:none;width:min(100%,460px)}
+  .story-steps{padding-block:20px 60px}
+  .step{min-height:0;opacity:1;padding-block:32px;border-top:1px solid var(--line)}
+}
+
+/* ---------- Product cards ---------- */
+.room-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:48px}
+.room-head .lead{max-width:48ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.card{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--bg-3);border:1px solid var(--line);transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s;display:flex;flex-direction:column;min-width:0}
+.card:hover{transform:translateY(-8px);box-shadow:0 40px 60px -30px rgba(0,0,0,.8)}
+.card .media{aspect-ratio:1/1;overflow:hidden;position:relative;display:grid;place-items:center}
+.card .media img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.card:hover .media img{transform:scale(1.07)}
+.card .media.cut{background:radial-gradient(circle at 50% 35%,rgba(243,212,138,.18),transparent 60%)}
+.card .media.cut img{object-fit:contain;padding:10%;filter:drop-shadow(0 24px 24px rgba(0,0,0,.55))}
+.card .pill{position:absolute;top:14px;left:14px;padding:6px 12px;border-radius:999px;background:var(--gold);color:#1d0d06;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;z-index:2}
+.card .body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card .body b{font-family:var(--font-display);font-size:21px;font-weight:500;line-height:1.1}
+.card .body p{color:var(--fg-soft);font-size:14px}
+.card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:14px}
+.card .price{font-family:var(--font-display);font-size:20px;color:var(--gold-2)}
+.card .price small{font-family:var(--font-body);font-size:11px;color:var(--fg-dim);letter-spacing:.1em;margin-left:4px}
+.card .add{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:.3s}
+.card .add:hover{background:var(--gold);color:#1d0d06;border-color:var(--gold)}
+
+/* ---------- Mithai room ---------- */
+.room-mithai{background:
+  radial-gradient(70% 60% at 85% 10%,rgba(217,168,78,.18),transparent 60%),
+  radial-gradient(60% 50% at 0% 100%,rgba(198,65,79,.25),transparent 60%),
+  linear-gradient(180deg,#3a0b14,var(--maroon) 40%,#2d0810)}
+.room-mithai::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(243,212,138,.14) 1px,transparent 1px);background-size:26px 26px;mask-image:linear-gradient(180deg,transparent,black 30%,black 70%,transparent);opacity:.5;pointer-events:none}
+.room-mithai .card{background:rgba(255,255,255,.04);border-color:rgba(243,212,138,.18)}
+.mithai-feature{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,60px);align-items:center;margin-bottom:60px}
+.mithai-hero{position:relative;border-radius:32px;overflow:hidden;aspect-ratio:4/5;max-height:640px;box-shadow:var(--shadow)}
+.mithai-hero img{width:100%;height:100%;object-fit:cover}
+.mithai-hero .frame{position:absolute;inset:16px;border:1px solid rgba(243,212,138,.5);border-radius:22px;pointer-events:none}
+.mithai-hero .frame::after{content:"Since 1990 · Handmade daily";position:absolute;left:50%;bottom:-1px;transform:translate(-50%,50%);background:#2d0810;padding:4px 14px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-2)}
+.boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+.box{border:1px solid rgba(243,212,138,.3);border-radius:18px;padding:18px;background:linear-gradient(180deg,rgba(243,212,138,.08),rgba(0,0,0,.1));text-align:center;position:relative;overflow:hidden}
+.box b{font-family:var(--font-display);display:block;font-size:30px;line-height:1;color:var(--gold-2)}
+.box small{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-dim);margin-top:8px}
+.box.hot::before{content:"Popular";position:absolute;top:10px;right:-28px;transform:rotate(35deg);background:var(--gold);color:#1d0d06;font-size:9px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;padding:3px 34px}
+@media (max-width:980px){.mithai-feature{grid-template-columns:1fr}.mithai-hero{aspect-ratio:4/3;max-height:none}}
+@media (max-width:560px){.boxes{grid-template-columns:1fr 1fr}.boxes .box:last-child{grid-column:span 2}}
+
+/* ---------- Cakes room (cream) ---------- */
+.room-cakes{background:
+  radial-gradient(50% 40% at 10% 0%,rgba(217,168,78,.25),transparent 60%),
+  radial-gradient(50% 40% at 100% 100%,rgba(198,65,79,.14),transparent 60%),
+  linear-gradient(180deg,var(--cream),var(--cream-2));color:var(--ink)}
+.room-cakes .eyebrow{color:#9d7430}.room-cakes .eyebrow::before{background:#9d7430}
+.room-cakes .lead{color:rgba(42,20,13,.72)}
+.room-cakes .display em{color:#9d7430}
+.room-cakes .card{background:rgba(255,255,255,.55);border-color:rgba(42,20,13,.08);box-shadow:0 20px 40px -24px rgba(42,20,13,.35)}
+.room-cakes .card .body p{color:rgba(42,20,13,.65)}
+.room-cakes .card .price{color:#7a5520}
+.room-cakes .card .price small,.room-cakes .card .add{color:rgba(42,20,13,.55);border-color:rgba(42,20,13,.18)}
+.room-cakes .card .media.cut{background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.9),rgba(255,255,255,0) 65%)}
+.room-cakes .card .media.cut img{filter:drop-shadow(0 26px 22px rgba(42,20,13,.28))}
+.room-cakes .card .pill{background:var(--ink);color:var(--cream)}
+.cake-parade{position:relative;height:clamp(260px,32vw,420px);margin:10px 0 40px;display:flex;align-items:flex-end;justify-content:center;gap:0}
+.cake-parade img{position:absolute;bottom:0;filter:drop-shadow(0 40px 30px rgba(42,20,13,.35));will-change:transform}
+.cp-1{left:4%;width:22%}.cp-2{left:22%;width:26%;bottom:6%!important;z-index:2}.cp-3{left:40%;width:30%;z-index:3}.cp-4{right:16%;width:24%;z-index:2}.cp-5{right:2%;width:18%}
+.cake-parade::after{content:"";position:absolute;left:10%;right:10%;bottom:-6px;height:40px;border-radius:50%;background:radial-gradient(ellipse,rgba(42,20,13,.28),transparent 70%);filter:blur(8px)}
+.custom-cake{margin-top:60px;border-radius:32px;background:var(--ink);color:var(--cream);padding:clamp(28px,4vw,56px);display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;position:relative;overflow:hidden}
+.custom-cake::before{content:"";position:absolute;inset:auto -10% -40% auto;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(217,168,78,.35),transparent 65%)}
+.custom-cake .eyebrow{color:var(--gold)}.custom-cake .eyebrow::before{background:var(--gold)}
+.custom-cake .lead{color:var(--fg-soft)}
+.custom-cake .steps{display:grid;gap:14px;margin-top:26px}
+.custom-cake .steps div{display:flex;gap:14px;align-items:center;font-size:15px;color:var(--fg-soft)}
+.custom-cake .steps i{width:30px;height:30px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;font-style:normal;font-size:12px;color:var(--gold-2);flex:none}
+.custom-cake img{width:min(100%,380px);margin-inline:auto;filter:drop-shadow(0 40px 40px rgba(0,0,0,.6));position:relative}
+@media (max-width:980px){.custom-cake{grid-template-columns:1fr}.custom-cake img{width:min(100%,300px)}}
+
+/* ---------- Bakery room ---------- */
+.room-bakery{background:
+  radial-gradient(60% 50% at 100% 0%,rgba(217,168,78,.2),transparent 60%),
+  linear-gradient(180deg,#2c1a10,var(--toast) 50%,#2a160e)}
+.bakery-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-top:50px}
+.bk{border-radius:var(--radius);overflow:hidden;position:relative;min-height:240px;border:1px solid var(--line);min-width:0}
+.bk img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.bk:hover img{transform:scale(1.06)}
+.bk .cap{position:absolute;left:18px;bottom:18px;z-index:2;background:rgba(18,8,6,.55);backdrop-filter:blur(10px);padding:10px 14px;border-radius:12px;border:1px solid var(--line);font-size:13px}
+.bk .cap b{display:block;font-family:var(--font-display);font-size:19px;font-weight:500}
+.bk-1{grid-column:span 7;min-height:380px}.bk-2{grid-column:span 5}.bk-3{grid-column:span 5}.bk-4{grid-column:span 7}
+.bk.text{background:linear-gradient(160deg,rgba(243,212,138,.12),rgba(0,0,0,.2));padding:28px;display:flex;flex-direction:column;justify-content:flex-end;gap:12px}
+.bk.text .h3{font-weight:400;max-width:54%}.bk.text .lead{max-width:56%}
+.bread-float{position:absolute;right:-6%;top:-4%;width:42%;filter:drop-shadow(0 30px 30px rgba(0,0,0,.6));animation:float2 8s ease-in-out infinite}
+@keyframes float2{0%,100%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(-2deg) translateY(-14px)}}
+.timeline{display:flex;gap:0;margin-top:46px;border-top:1px solid var(--line);flex-wrap:wrap}
+.timeline div{flex:1 1 160px;padding:22px 20px 0;border-right:1px solid var(--line);min-width:0}
+.timeline div:last-child{border-right:0}
+.timeline b{display:block;font-family:var(--font-display);font-size:30px;color:var(--gold-2);font-weight:400;line-height:1}
+.timeline p{color:var(--fg-soft);font-size:14px;margin-top:6px}
+@media (max-width:980px){.bk-1,.bk-2,.bk-3,.bk-4{grid-column:span 12}.bk-1{min-height:300px}.bk.text{padding-top:120px}.bk.text .h3,.bk.text .lead{max-width:100%}.bread-float{width:34%;top:-4%;right:-2%}}
+
+/* ---------- Restaurant / fast food room ---------- */
+.room-rest{background:
+  radial-gradient(50% 50% at 0% 20%,rgba(198,65,79,.2),transparent 60%),
+  radial-gradient(60% 50% at 100% 80%,rgba(217,168,78,.15),transparent 60%),
+  linear-gradient(180deg,#0f0705,#1a0c09 50%,#0f0705)}
+.rest-hero{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,60px);align-items:center;margin-bottom:60px}
+.rest-stage{position:relative;height:clamp(300px,36vw,520px)}
+.rest-stage img{position:absolute;filter:drop-shadow(0 40px 40px rgba(0,0,0,.7))}
+.rs-pizza{left:0;top:4%;width:58%;animation:spinslow 60s linear infinite}
+.rs-burger{right:2%;bottom:0;width:48%;z-index:2;animation:float 6s ease-in-out infinite;transform-origin:center}
+.rs-fries{right:30%;top:0;width:26%;transform:rotate(14deg);z-index:1}
+.rest-stage::after{content:"";position:absolute;left:10%;right:10%;bottom:-20px;height:50px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.7),transparent 70%);filter:blur(10px)}
+.menu-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.menu-tabs button{padding:10px 18px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-soft);transition:.3s}
+.menu-tabs button.on,.menu-tabs button:hover{background:var(--gold);color:#1d0d06;border-color:var(--gold)}
+.menu-panel{display:none;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px 40px}
+.menu-panel.on{display:grid}
+.mi{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px dashed var(--line)}
+.mi img{width:64px;height:64px;border-radius:14px;object-fit:cover;flex:none;background:var(--bg-3)}
+.mi img.cut{object-fit:contain;padding:4px}
+.mi .t{flex:1;min-width:0}
+.mi .t b{display:block;font-family:var(--font-display);font-size:19px;font-weight:500}
+.mi .t p{font-size:13px;color:var(--fg-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mi .p{font-family:var(--font-display);color:var(--gold-2);font-size:19px;white-space:nowrap}
+.fast-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:60px}
+.fs{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;border:1px solid var(--line)}
+.fs img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.fs:hover img{transform:scale(1.08)}
+.fs::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(15,7,5,.9))}
+.fs b{position:absolute;left:16px;bottom:16px;z-index:2;font-family:var(--font-display);font-size:22px;font-weight:500}
+.fs small{position:absolute;left:16px;bottom:44px;z-index:2;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+@media (max-width:980px){.rest-hero{grid-template-columns:1fr}.rest-stage{height:min(80vw,380px)}}
+
+/* ---------- Cash & carry ---------- */
+.room-cc{background:linear-gradient(180deg,var(--bg),#17100b)}
+.cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,60px);align-items:center}
+.cc-photo{position:relative;border-radius:32px;overflow:hidden;aspect-ratio:4/5;max-height:620px;box-shadow:var(--shadow)}
+.cc-photo img{width:100%;height:100%;object-fit:cover}
+.cc-photo .chip{position:absolute;padding:12px 16px;border-radius:14px;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--line);font-size:13px;display:flex;gap:10px;align-items:center}
+.cc-photo .chip b{font-family:var(--font-display);font-size:20px;color:var(--gold-2)}
+.chip-a{left:18px;top:18px}.chip-b{right:18px;bottom:18px}
+.cc-list{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px}
+.cc-list > div{padding:18px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.025);display:flex;gap:12px;align-items:flex-start}
+.cc-list svg{width:22px;height:22px;flex:none;color:var(--gold)}
+.cc-list b{display:block;font-weight:600;font-size:15px}
+.cc-list p{font-size:13px;color:var(--fg-dim)}
+@media (max-width:980px){.cc-grid{grid-template-columns:1fr}.cc-photo{aspect-ratio:4/3;max-height:none}}
+@media (max-width:560px){.cc-list{grid-template-columns:1fr}}
+
+/* ---------- Specials ---------- */
+.specials{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:50px}
+.sp{position:relative;border-radius:26px;overflow:hidden;min-height:380px;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;border:1px solid var(--line);isolation:isolate}
+.sp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.sp:hover img{transform:scale(1.06)}
+.sp::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(18,8,6,.1),rgba(18,8,6,.92))}
+.sp .ribbon{position:absolute;top:18px;left:18px;padding:8px 14px;border-radius:999px;background:var(--rose);color:#fff;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.sp .ribbon.gold{background:var(--gold);color:#1d0d06}
+.sp b{font-family:var(--font-display);font-size:28px;font-weight:500;line-height:1.05}
+.sp p{color:var(--fg-soft);font-size:14px;margin-top:8px}
+.sp .row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.sp .was{text-decoration:line-through;color:var(--fg-dim);font-size:13px;margin-right:8px}
+.sp .now{font-family:var(--font-display);font-size:26px;color:var(--gold-2)}
+
+/* ---------- Why us ---------- */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px}
+.wh{padding:28px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,0));transition:.4s;position:relative;overflow:hidden}
+.wh::after{content:"";position:absolute;inset:auto -30% -50% auto;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(217,168,78,.25),transparent 65%);opacity:0;transition:.5s}
+.wh:hover{border-color:rgba(243,212,138,.4);transform:translateY(-4px)}
+.wh:hover::after{opacity:1}
+.wh .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(243,212,138,.2),rgba(217,168,78,.05));border:1px solid rgba(243,212,138,.3);color:var(--gold-2);margin-bottom:22px}
+.wh .ic svg{width:24px;height:24px}
+.wh b{display:block;font-family:var(--font-display);font-size:24px;font-weight:500;margin-bottom:8px}
+.wh p{color:var(--fg-soft);font-size:14.5px}
+@media (max-width:980px){.why{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.why{grid-template-columns:1fr}}
+
+/* ---------- Testimonials ---------- */
+.room-testi{background:linear-gradient(180deg,#17100b,var(--bg))}
+.testi{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px}
+.tc{padding:30px;border-radius:24px;background:var(--bg-3);border:1px solid var(--line);display:flex;flex-direction:column;gap:18px;position:relative}
+.tc .q{font-family:var(--font-display);font-size:60px;line-height:.5;color:var(--gold);opacity:.7;height:22px}
+.tc p{font-size:16px;line-height:1.65;color:var(--fg)}
+.tc .who{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.tc .av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold-2),var(--gold-3));display:grid;place-items:center;font-weight:800;color:#1d0d06}
+.tc .who b{display:block;font-size:14px}.tc .who small{color:var(--fg-dim);font-size:12px}
+.stars{color:var(--gold);letter-spacing:2px;font-size:14px}
+.rating-bar{display:flex;flex-wrap:wrap;gap:30px 50px;align-items:center;justify-content:center;margin-top:40px;padding:26px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+.rating-bar div{text-align:center}
+.rating-bar b{display:block;font-family:var(--font-display);font-size:38px;color:var(--gold-2);font-weight:400;line-height:1}
+.rating-bar small{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-dim)}
+@media (max-width:980px){.testi{grid-template-columns:1fr}}
+
+/* ---------- Gallery ---------- */
+.gallery{columns:4;column-gap:14px;margin-top:50px}
+.gallery figure{margin:0 0 14px;break-inside:avoid;border-radius:18px;overflow:hidden;position:relative;border:1px solid var(--line)}
+.gallery img{width:100%;height:auto;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.gallery figure:hover img{transform:scale(1.06)}
+.gallery figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 16px 14px;background:linear-gradient(transparent,rgba(18,8,6,.85));font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-2);opacity:0;transform:translateY(8px);transition:.4s}
+.gallery figure:hover figcaption{opacity:1;transform:none}
+@media (max-width:980px){.gallery{columns:3}}
+@media (max-width:560px){.gallery{columns:2}}
+
+/* ---------- Contact ---------- */
+.room-contact{background:
+  radial-gradient(60% 50% at 100% 0%,rgba(217,168,78,.14),transparent 60%),
+  linear-gradient(180deg,var(--bg),#1a0c09)}
+.contact-grid > *{min-width:0}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,60px);align-items:stretch}
+.info-cards{display:grid;gap:14px;margin-top:30px}
+.ic-row{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.025)}
+.ic-row svg{width:22px;height:22px;color:var(--gold);flex:none;margin-top:2px}
+.ic-row > div{min-width:0;flex:1}.ic-row span{overflow-wrap:anywhere}
+.ic-row b{display:block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-dim);margin-bottom:4px}
+.ic-row span{font-size:16px}
+.ic-row .copy{margin-left:auto;font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);padding:6px 10px;border-radius:999px;color:var(--fg-soft);transition:.3s}
+.ic-row .copy:hover{border-color:var(--gold);color:var(--gold-2)}
+.map{position:relative;border-radius:28px;overflow:hidden;min-height:260px;flex:1;background:
+  radial-gradient(circle at 50% 50%,rgba(217,168,78,.18),transparent 40%),
+  repeating-linear-gradient(0deg,rgba(246,234,214,.05) 0 1px,transparent 1px 42px),
+  repeating-linear-gradient(90deg,rgba(246,234,214,.05) 0 1px,transparent 1px 42px),var(--bg-3);border:1px solid var(--line)}
+.map .road{position:absolute;background:rgba(246,234,214,.08);border-radius:4px}
+.map .pin{position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);display:grid;place-items:center}
+.map .pin i{width:18px;height:18px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 10px rgba(217,168,78,.2),0 0 0 22px rgba(217,168,78,.08);animation:pulse 2.2s ease-out infinite}
+.map .pin b{margin-top:10px;background:var(--bg);border:1px solid var(--gold);padding:8px 14px;border-radius:12px;font-size:12px;white-space:nowrap}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(217,168,78,.5)}100%{box-shadow:0 0 0 28px rgba(217,168,78,0)}}
+.map .note{position:absolute;left:16px;bottom:16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-dim)}
+.form{padding:clamp(24px,3vw,40px);border-radius:28px;background:var(--bg-3);border:1px solid var(--line);display:grid;gap:14px;align-content:start}
+.form h3{margin:0 0 6px;font-family:var(--font-display);font-weight:500;font-size:30px}
+.form .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form label{display:grid;gap:6px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-dim)}
+.form input,.form select,.form textarea{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--fg);font:inherit;font-size:15px;letter-spacing:0;text-transform:none}
+.form textarea{min-height:110px;resize:vertical}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--gold)}
+.form .ok{display:none;padding:14px 16px;border-radius:12px;background:rgba(217,168,78,.14);border:1px solid var(--gold);color:var(--gold-2);font-size:14px}
+.form.sent .ok{display:block}
+.contact-side{display:flex;flex-direction:column}
+@media (max-width:980px){.contact-grid{grid-template-columns:1fr}.form .row{grid-template-columns:1fr}}
+
+/* ---------- CTA band ---------- */
+.cta-band{margin-top:0;position:relative;overflow:hidden;padding-block:clamp(60px,8vw,110px);text-align:center;background:linear-gradient(135deg,#3a0b14,#6b1a28 50%,#3a0b14)}
+.cta-band::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 60% at 50% 100%,rgba(217,168,78,.35),transparent 70%)}
+.cta-band .h2{position:relative}
+.cta-band .btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:34px;position:relative}
+.cta-band .orbit{position:absolute;width:160px;filter:drop-shadow(0 30px 30px rgba(0,0,0,.6));opacity:.9}
+.o1{left:4%;top:10%;animation:float 7s ease-in-out infinite}.o2{right:5%;bottom:6%;width:200px!important;animation:float2 9s ease-in-out infinite}
+@media (max-width:980px){.cta-band .orbit{width:90px;opacity:.6}.o2{width:120px!important}}
+
+/* ---------- Footer ---------- */
+footer{padding:70px 0 30px;border-top:1px solid var(--line);background:#0c0504}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+.foot-grid h4{margin:0 0 16px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.foot-grid ul{list-style:none;padding:0;margin:0;display:grid;gap:10px;color:var(--fg-soft);font-size:14.5px}
+.foot-grid ul a:hover{color:var(--fg)}
+.foot-grid p{color:var(--fg-soft);font-size:14.5px;max-width:38ch;margin-top:16px}
+.socials{display:flex;gap:10px;margin-top:22px}
+.socials a{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:.3s}
+.socials a:hover{background:var(--gold);color:#1d0d06;border-color:var(--gold)}
+.socials svg{width:16px;height:16px}
+.foot-bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--fg-dim)}
+@media (max-width:980px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.foot-grid{grid-template-columns:1fr}}
+
+/* ---------- Reveal utilities ---------- */
+.rv{opacity:1}
+.js .rv{opacity:0;transform:translateY(34px)}
+.js .rv.in{opacity:1;transform:none;transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.js .rv-d1.in{transition-delay:.08s}.js .rv-d2.in{transition-delay:.16s}.js .rv-d3.in{transition-delay:.24s}.js .rv-d4.in{transition-delay:.32s}
+.cursor-glow{position:fixed;left:0;top:0;width:360px;height:360px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(217,168,78,.10),transparent 60%);transform:translate(-50%,-50%);mix-blend-mode:screen;opacity:0;transition:opacity .6s}
+@media (hover:hover) and (min-width:981px){.cursor-glow{opacity:1}}
+.demo-tag{position:fixed;left:14px;bottom:14px;z-index:60;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-dim);background:rgba(18,8,6,.6);border:1px solid var(--line);padding:6px 10px;border-radius:999px;backdrop-filter:blur(8px)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .js .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="glow"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a href="#top" class="logo" aria-label="Mega Sweets & Bakers home">
+      <span class="logo-mark">M</span>
+      <span class="logo-text"><b>Mega</b><span>Sweets &amp; Bakers</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#categories">Menu</a>
+      <a href="#mithai">Sweets</a>
+      <a href="#cakes">Cakes</a>
+      <a href="#bakery">Bakery</a>
+      <a href="#restaurant">Restaurant</a>
+      <a href="#cashcarry">Cash &amp; Carry</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#visit" class="btn btn-ghost">Book a Cake</a>
+      <a href="#restaurant" class="btn btn-gold">Order Now
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <nav>
+    <a href="#categories">Menu</a><a href="#mithai">Sweets</a><a href="#cakes">Cakes</a><a href="#bakery">Bakery</a><a href="#restaurant">Restaurant</a><a href="#cashcarry">Cash &amp; Carry</a><a href="#visit">Visit Us</a>
+  </nav>
+</div>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <canvas id="sugar" aria-hidden="true"></canvas>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Sweets · Bakers · Restaurant · Cash &amp; Carry</p>
+      <h1 class="display h1">
+        <span class="line"><span>Every craving,</span></span>
+        <span class="line"><span><em>one</em> glorious roof.</span></span>
+      </h1>
+      <p class="lead rv">From hand-rolled mithai and celebration cakes to oven-fresh bread, wood-fired pizza and late-night burgers — <strong>Mega Sweets &amp; Bakers</strong> is the destination for every sweet tooth and every hungry table.</p>
+      <div class="hero-ctas rv rv-d1">
+        <a href="#categories" class="btn btn-gold">Explore the Menu
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#cakes" class="btn btn-ghost">Book a Custom Cake</a>
+      </div>
+      <div class="hero-meta rv rv-d2">
+        <div><b class="num">10+</b>Food categories</div>
+        <div><b class="num">200+</b>Items made daily</div>
+        <div><b>6 AM</b>Fresh bake begins</div>
+      </div>
+    </div>
+    <div class="hero-stage" id="stage">
+      <div class="plate"></div>
+      <div class="ring" id="ring"><img class="centerpiece" src="img/cake-drip.webp" alt="Chocolate drip celebration cake" width="1000" height="707"><div class="ring-inner" id="ringInner"></div></div>
+      <div class="hero-badge badge-1"><i>★</i><div><small>Signature</small><b>Kaju Katli</b></div></div>
+      <div class="hero-badge badge-2"><i>◆</i><div><small>Now serving</small><b>Wood-fired pizza</b></div></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><i></i></div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marquee">
+    <span>Mithai</span><span>Celebration Cakes</span><span>Fresh Bakery</span><span>Pastries &amp; Donuts</span><span>Pizza</span><span>Burgers</span><span>Snacks</span><span>Shakes &amp; Beverages</span><span>Cash &amp; Carry</span><span>Dine-in · Takeaway · Delivery</span>
+  </div>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<section class="section" id="about">
+  <div class="wrap about-grid">
+    <div class="collage rv">
+      <figure class="c1" data-depth="0.08"><img src="img/ph-mithai-counter.webp" alt="Mithai counter with trays of fresh sweets"></figure>
+      <figure class="c2" data-depth="0.16"><img src="img/ph-bakery-shelves.webp" alt="Warm bakery shelves lined with bread"></figure>
+      <figure class="c3" data-depth="0.12"><img src="img/ph-restaurant.webp" alt="Restaurant dining room"></figure>
+      <div class="stamp" aria-hidden="true">
+        <svg viewBox="0 0 120 120"><defs><path id="circ" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><text><textPath href="#circ">Sweets · Bakers · Restaurant · Cash &amp; Carry · </textPath></text></svg>
+        <b>M</b>
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow rv">About Mega Sweets &amp; Bakers</p>
+      <h2 class="display h2 rv rv-d1">A family food house <em>built on taste</em>, trusted for generations.</h2>
+      <p class="lead rv rv-d2" style="margin-top:24px">Mega Sweets &amp; Bakers began as a neighbourhood sweet shop and grew into a complete food destination. Today our kitchens run from dawn to midnight: bakers pulling the first loaves at six, halwais finishing trays of barfi by mid-morning, pizza ovens and grills firing through the evening, and a cash-and-carry floor stocked for the whole family.</p>
+      <p class="lead rv rv-d3" style="margin-top:18px">One roof. One standard. Everything made with real ingredients, real time and the kind of care that makes customers come back for every occasion — from a Tuesday tea to a wedding of five hundred.</p>
+      <div class="about-points">
+        <div class="rv"><b>Made fresh, daily</b><p>Nothing sits overnight. Sweets, bread and pastries are made in-house every morning.</p></div>
+        <div class="rv rv-d1"><b>Bakery + restaurant</b><p>A full bakery, a mithai counter and a sit-down kitchen under one roof.</p></div>
+        <div class="rv rv-d2"><b>Every occasion</b><p>Eid, weddings, birthdays, office orders and quiet weeknight dinners.</p></div>
+        <div class="rv rv-d3"><b>Family friendly</b><p>Spacious dine-in, quick takeaway and a cash-and-carry floor for the weekly shop.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CATEGORIES ================= -->
+<section class="section" id="categories" style="padding-top:0">
+  <div class="wrap">
+    <div class="room-head">
+      <div>
+        <p class="eyebrow rv">Featured categories</p>
+        <h2 class="display h2 rv rv-d1">Ten worlds of flavour, <em>one address.</em></h2>
+      </div>
+      <p class="lead rv rv-d2">Browse by craving. Every category below is made or curated in-house and available for dine-in, takeaway and delivery.</p>
+    </div>
+    <div class="cats" id="cats">
+      <a href="#mithai" class="cat wide tall tilt"><img src="img/ph-mithai-platter.webp" alt="Assorted mithai platter"><div class="label"><div><small>Traditional</small><b>Sweets &amp; Mithai</b></div><span class="arrow">→</span></div></a>
+      <a href="#cakes" class="cat med cut tilt"><img src="img/cake-cherry.webp" alt="Cherry celebration cake"><div class="label"><div><small>Celebrate</small><b>Cakes</b></div><span class="arrow">→</span></div></a>
+      <a href="#cakes" class="cat small tilt"><img src="img/ph-pastry-display.webp" alt="Pastry display"><div class="label"><div><small>Patisserie</small><b>Pastries</b></div><span class="arrow">→</span></div></a>
+      <a href="#bakery" class="cat med tilt"><img src="img/ph-bread-shelves.webp" alt="Fresh bread shelves"><div class="label"><div><small>Oven fresh</small><b>Bakery</b></div><span class="arrow">→</span></div></a>
+      <a href="#restaurant" class="cat small cut tilt"><img src="img/pizza-pepperoni.webp" alt="Pepperoni pizza"><div class="label"><div><small>Wood-fired</small><b>Pizza</b></div><span class="arrow">→</span></div></a>
+      <a href="#restaurant" class="cat small cut tilt"><img src="img/burger-classic.webp" alt="Classic burger"><div class="label"><div><small>Grill</small><b>Burgers</b></div><span class="arrow">→</span></div></a>
+      <a href="#restaurant" class="cat med tilt"><img src="img/ph-wings.webp" alt="Grilled wings platter"><div class="label"><div><small>Kitchen</small><b>Restaurant</b></div><span class="arrow">→</span></div></a>
+      <a href="#restaurant" class="cat small tilt"><img src="img/ph-snack1.webp" alt="Samosa with chai"><div class="label"><div><small>Hot &amp; crispy</small><b>Snacks</b></div><span class="arrow">→</span></div></a>
+      <a href="#restaurant" class="cat small tilt"><img src="img/ph-milkshake.webp" alt="Chocolate milkshake"><div class="label"><div><small>Chilled</small><b>Beverages</b></div><span class="arrow">→</span></div></a>
+      <a href="#cashcarry" class="cat wide tilt"><img src="img/ph-grocery-aisle.webp" alt="Cash and carry aisle"><div class="label"><div><small>Wholesale &amp; retail</small><b>Cash &amp; Carry</b></div><span class="arrow">→</span></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PINNED STORY ================= -->
+<section class="story" id="story">
+  <div class="wrap story-wrap">
+    <div class="story-stage">
+      <div class="stage-frame" id="stageFrame">
+        <div class="shot on" data-i="0"><img src="img/ph-mithai-ladoo-dark.webp" alt="Motichoor ladoo by lamplight"></div>
+        <div class="shot" data-i="1"><img src="img/ph-cupcake-dark.webp" alt="Chocolate cupcake with cherries"></div>
+        <div class="shot" data-i="2"><img src="img/ph-bakery-shelves.webp" alt="Bakery shelves at dawn"></div>
+        <div class="shot" data-i="3"><img src="img/ph-burger-dark.webp" alt="Bacon cheeseburger"></div>
+        <img class="float f-a on" data-i="0" src="img/cake-truffle.webp" alt="">
+        <img class="float f-b" data-i="1" src="img/cupcake-pink.webp" alt="">
+        <img class="float f-a" data-i="2" src="img/bread-sour.webp" alt="">
+        <img class="float f-b" data-i="3" src="img/pizza-margherita.webp" alt="">
+        <div class="stage-caption"><span class="idx num" id="stageIdx">01</span><b id="stageTitle">The Mithai Counter</b></div>
+      </div>
+    </div>
+    <div class="story-steps" id="steps">
+      <div class="step on" data-title="The Mithai Counter">
+        <p class="eyebrow">01 — Sweets</p>
+        <h3 class="display h2">Sweets made the <em>slow way.</em></h3>
+        <p class="lead">Khoya reduced over hours, cashews ground fresh for kaju katli, syrup pulled to the exact thread. Our halwais still work by hand, tray by tray, every single morning.</p>
+        <ul><li>Over 40 varieties of mithai, including sugar-free options</li><li>Gift boxes for Eid, weddings and corporate orders</li><li>Weighed fresh at the counter or pre-boxed to go</li></ul>
+      </div>
+      <div class="step" data-title="The Cake Studio">
+        <p class="eyebrow">02 — Cakes &amp; pastries</p>
+        <h3 class="display h2">Celebrations <em>built in layers.</em></h3>
+        <p class="lead">From a half-kilo chocolate truffle to five-tier wedding towers, every cake is baked, filled and finished in our own studio. Pastries, cupcakes, brownies and donuts fill the counter beside them.</p>
+        <ul><li>Custom cakes designed with you, ready in 48 hours</li><li>Eggless and reduced-sugar recipes available</li><li>Fresh cream, Belgian chocolate, real fruit</li></ul>
+      </div>
+      <div class="step" data-title="The Bakery">
+        <p class="eyebrow">03 — Bakery</p>
+        <h3 class="display h2">The ovens never <em>really sleep.</em></h3>
+        <p class="lead">Our bakers start at six. By the time the doors open, the shelves are stacked with sourdough, soft milk bread, buns, rusks, cookies and biscuits that smell like home.</p>
+        <ul><li>Breads, buns and rusks baked twice daily</li><li>Cookies and biscuits by the box</li><li>Wholesale supply for cafés, schools and events</li></ul>
+      </div>
+      <div class="step" data-title="The Kitchen &amp; Grill">
+        <p class="eyebrow">04 — Restaurant &amp; fast food</p>
+        <h3 class="display h2">Then the grill <em>takes over.</em></h3>
+        <p class="lead">Wood-fired pizzas, stacked burgers, crispy fries, wings, wraps and thick shakes — served fast, served hot, served late. Dine in with the family or take the whole order home.</p>
+        <ul><li>Family dine-in and quick takeaway counter</li><li>Pizza, burgers, snacks and beverages in one order</li><li>Open until late, seven days a week</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MITHAI ================= -->
+<section class="section room-mithai" id="mithai">
+  <div class="wrap">
+    <div class="mithai-feature">
+      <div>
+        <p class="eyebrow rv">Sweets &amp; Mithai</p>
+        <h2 class="display h2 rv rv-d1">Boxes of <em>celebration</em>, weighed by the gram.</h2>
+        <p class="lead rv rv-d2" style="margin-top:22px">Kaju katli pressed with silver leaf, gulab jamun soaked in cardamom syrup, motichoor ladoo rolled fine as pearls, crisp jalebi fried to order. Every piece is made in our own sweet kitchen and sold the same day.</p>
+        <div class="boxes rv rv-d3">
+          <div class="box"><b>250g</b><small>Taster box</small></div>
+          <div class="box hot"><b>500g</b><small>Family box</small></div>
+          <div class="box"><b>1kg+</b><small>Gift &amp; wedding</small></div>
+        </div>
+        <div class="hero-ctas rv rv-d4"><a href="#visit" class="btn btn-gold">Order a Mithai Box</a><a href="#visit" class="btn btn-ghost">Wedding &amp; Bulk Orders</a></div>
+      </div>
+      <div class="mithai-hero rv rv-d1"><img src="img/ph-mithai-platter.webp" alt="Assorted mithai platter with rose petals"><div class="frame"></div></div>
+    </div>
+    <div class="cards">
+      <article class="card rv"><div class="media"><span class="pill">Signature</span><img src="img/ph-mithai-kaju-katli.webp" alt="Kaju katli"></div><div class="body"><b>Kaju Katli</b><p>Pure cashew, slow-set, finished with silver leaf.</p><div class="foot"><span class="price">1,200<small>/ KG</small></span><span class="add">+</span></div></div></article>
+      <article class="card rv rv-d1"><div class="media"><img src="img/ph-mithai-gulab-jamun.webp" alt="Gulab jamun"></div><div class="body"><b>Gulab Jamun</b><p>Soft khoya dumplings in warm cardamom syrup.</p><div class="foot"><span class="price">650<small>/ KG</small></span><span class="add">+</span></div></div></article>
+      <article class="card rv rv-d2"><div class="media"><img src="img/ph-mithai-motichoor.webp" alt="Motichoor ladoo"></div><div class="body"><b>Motichoor Ladoo</b><p>Fine pearls of gram flour, saffron and ghee.</p><div class="foot"><span class="price">700<small>/ KG</small></span><span class="add">+</span></div></div></article>
+      <article class="card rv rv-d3"><div class="media"><span class="pill">Fried to order</span><img src="img/ph-mithai-jalebi.webp" alt="Jalebi"></div><div class="body"><b>Jalebi &amp; Imarti</b><p>Crisp spirals, hot from the pan, dipped in syrup.</p><div class="foot"><span class="price">500<small>/ KG</small></span><span class="add">+</span></div></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CAKES ================= -->
+<section class="section room-cakes" id="cakes">
+  <div class="wrap">
+    <div class="room-head">
+      <div>
+        <p class="eyebrow rv">Cakes &amp; Pastries</p>
+        <h2 class="display h2 rv rv-d1">Say it with <em>layers.</em></h2>
+      </div>
+      <p class="lead rv rv-d2">Birthday, anniversary, engagement or just Tuesday — pick a signature cake from the counter or design your own with our cake studio.</p>
+    </div>
+    <div class="cake-parade" id="parade" aria-hidden="true">
+      <img class="cp-1" src="img/cake-vanilla.webp" alt="" data-speed="0.6">
+      <img class="cp-2" src="img/cake-raspberry.webp" alt="" data-speed="1.1">
+      <img class="cp-3" src="img/cake-choc.webp" alt="" data-speed="0.8">
+      <img class="cp-4" src="img/cake-berry.webp" alt="" data-speed="1.3">
+      <img class="cp-5" src="img/cake-straw2.webp" alt="" data-speed="0.5">
+    </div>
+    <div class="cards">
+      <article class="card rv"><div class="media cut"><span class="pill">Best seller</span><img src="img/cake-truffle.webp" alt="Chocolate truffle cake"></div><div class="body"><b>Chocolate Truffle</b><p>Dark ganache, moist sponge, chocolate shards.</p><div class="foot"><span class="price">1,800<small>/ KG</small></span><span class="add">+</span></div></div></article>
+      <article class="card rv rv-d1"><div class="media cut"><img src="img/cake-strawberry.webp" alt="Strawberry cream cake"></div><div class="body"><b>Strawberry Cream</b><p>Fresh strawberries, vanilla sponge, whipped cream.</p><div class="foot"><span class="price">1,600<small>/ KG</small></span><span class="add">+</span></div></div></article>
+      <article class="card rv rv-d2"><div class="media cut"><img src="img/cupcake-cream.webp" alt="Cupcakes"></div><div class="body"><b>Cupcake Box</b><p>Six flavours, piped fresh, boxed for gifting.</p><div class="foot"><span class="price">900<small>/ BOX OF 6</small></span><span class="add">+</span></div></div></article>
+      <article class="card rv rv-d3"><div class="media"><img src="img/ph-donut-stack.webp" alt="Glazed donuts"></div><div class="body"><b>Donuts &amp; Pastries</b><p>Glazed, filled, sprinkled — baked through the day.</p><div class="foot"><span class="price">150<small>/ PIECE</small></span><span class="add">+</span></div></div></article>
+      <article class="card rv rv-d4"><div class="media cut"><img src="img/brownie.webp" alt="Fudge brownie"></div><div class="body"><b>Fudge Brownies</b><p>Dense, dark and gooey. Walnut or plain.</p><div class="foot"><span class="price">250<small>/ PIECE</small></span><span class="add">+</span></div></div></article>
+    </div>
+    <div class="custom-cake rv">
+      <div>
+        <p class="eyebrow">Cake studio</p>
+        <h3 class="display h3" style="font-size:clamp(30px,3.6vw,48px)">Book a <em>custom cake</em> in three steps.</h3>
+        <div class="steps">
+          <div><i>1</i>Tell us the occasion, size and flavour.</div>
+          <div><i>2</i>Share a reference or let our designers sketch one.</div>
+          <div><i>3</i>Collect or get it delivered, perfectly chilled, in 48 hours.</div>
+        </div>
+        <div class="hero-ctas"><a href="#visit" class="btn btn-gold">Start a Cake Order</a><a href="#gallery" class="btn btn-ghost">See Past Cakes</a></div>
+      </div>
+      <img src="img/cake-berry.webp" alt="Blueberry celebration cake">
+    </div>
+  </div>
+</section>
+
+<!-- ================= BAKERY ================= -->
+<section class="section room-bakery" id="bakery">
+  <div class="wrap">
+    <div class="room-head">
+      <div>
+        <p class="eyebrow rv">Fresh bakery</p>
+        <h2 class="display h2 rv rv-d1">Baked before <em>sunrise.</em></h2>
+      </div>
+      <p class="lead rv rv-d2">Breads, buns, rusks, cookies and biscuits — the everyday staples done properly, with real butter and long, patient proofing.</p>
+    </div>
+    <div class="bakery-grid">
+      <div class="bk bk-1 rv"><img src="img/ph-croissant-tray.webp" alt="Tray of golden croissants"><div class="cap"><b>Morning viennoiserie</b>Croissants, pain au chocolat, danishes</div></div>
+      <div class="bk bk-2 text rv rv-d1">
+        <img class="bread-float" src="img/bread-3.webp" alt="">
+        <h3 class="display h3">Sourdough &amp; artisan loaves</h3>
+        <p class="lead" style="font-size:15px">Long-fermented, crackling crusts, open crumb. Baked in small batches twice a day.</p>
+        <a href="#visit" class="btn btn-ghost" style="align-self:flex-start">Reserve a Loaf</a>
+      </div>
+      <div class="bk bk-3 rv rv-d2"><img src="img/ph-bread-shelves.webp" alt="Bread and bun display"><div class="cap"><b>Buns, rusks &amp; biscuits</b>Boxed by the dozen</div></div>
+      <div class="bk bk-4 rv rv-d3"><img src="img/ph-bakery-counter.webp" alt="Bakery counter"><div class="cap"><b>The bakery counter</b>Open from 7 AM daily</div></div>
+    </div>
+    <div class="timeline rv">
+      <div><b>6:00</b><p>First doughs shaped, ovens lit</p></div>
+      <div><b>7:00</b><p>Doors open, croissants and milk bread ready</p></div>
+      <div><b>11:00</b><p>Second bake — sourdough and buns</p></div>
+      <div><b>16:00</b><p>Evening bake for the dinner rush</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESTAURANT / FAST FOOD ================= -->
+<section class="section room-rest" id="restaurant">
+  <div class="wrap">
+    <div class="rest-hero">
+      <div>
+        <p class="eyebrow rv">Restaurant &amp; fast food</p>
+        <h2 class="display h2 rv rv-d1">Hot, loud and <em>made to order.</em></h2>
+        <p class="lead rv rv-d2" style="margin-top:22px">Pizzas from a stone oven, burgers off a flame grill, wings, fries, wraps and shakes. Family dine-in, a fast takeaway counter and delivery across town — all from the same kitchen.</p>
+        <div class="hero-ctas rv rv-d3"><a href="#visit" class="btn btn-gold">Order Now</a><a href="#visit" class="btn btn-ghost">Reserve a Table</a></div>
+      </div>
+      <div class="rest-stage rv rv-d1" aria-hidden="true">
+        <img class="rs-pizza" src="img/pizza-veg.webp" alt="">
+        <img class="rs-fries" src="img/fries.webp" alt="">
+        <img class="rs-burger" src="img/burger-hero.webp" alt="">
+      </div>
+    </div>
+
+    <div class="menu-tabs rv" id="menuTabs" role="tablist">
+      <button class="on" data-tab="pizza" role="tab" aria-selected="true">Pizza</button>
+      <button data-tab="burgers" role="tab" aria-selected="false">Burgers</button>
+      <button data-tab="snacks" role="tab" aria-selected="false">Snacks &amp; Sides</button>
+      <button data-tab="drinks" role="tab" aria-selected="false">Shakes &amp; Drinks</button>
+    </div>
+    <div class="menu-panel on rv" data-panel="pizza">
+      <div class="mi"><img class="cut" src="img/pizza-margherita.webp" alt=""><div class="t"><b>Classic Margherita</b><p>San Marzano tomato, mozzarella, basil</p></div><span class="p">1,150</span></div>
+      <div class="mi"><img class="cut" src="img/pizza-pepperoni.webp" alt=""><div class="t"><b>Double Pepperoni</b><p>Beef pepperoni, extra mozzarella</p></div><span class="p">1,450</span></div>
+      <div class="mi"><img class="cut" src="img/pizza-veg.webp" alt=""><div class="t"><b>Garden Supreme</b><p>Mushroom, olive, capsicum, onion, basil</p></div><span class="p">1,300</span></div>
+      <div class="mi"><img class="cut" src="img/pizza-sliced.webp" alt=""><div class="t"><b>Chicken Tikka</b><p>Tandoori chicken, peppers, mint drizzle</p></div><span class="p">1,500</span></div>
+    </div>
+    <div class="menu-panel rv" data-panel="burgers">
+      <div class="mi"><img class="cut" src="img/burger-classic.webp" alt=""><div class="t"><b>Mega Classic</b><p>Flame-grilled beef, cheddar, house sauce</p></div><span class="p">650</span></div>
+      <div class="mi"><img class="cut" src="img/burger-chicken.webp" alt=""><div class="t"><b>Crispy Zinger</b><p>Buttermilk chicken, lettuce, spicy mayo</p></div><span class="p">600</span></div>
+      <div class="mi"><img class="cut" src="img/burger-big.webp" alt=""><div class="t"><b>Tower Stack</b><p>Double patty, double cheese, onion rings</p></div><span class="p">950</span></div>
+      <div class="mi"><img class="cut" src="img/burger-grill.webp" alt=""><div class="t"><b>Smoky BBQ</b><p>Pulled beef, BBQ glaze, crispy onions</p></div><span class="p">850</span></div>
+    </div>
+    <div class="menu-panel rv" data-panel="snacks">
+      <div class="mi"><img src="img/ph-snack3.webp" alt=""><div class="t"><b>Samosa (6 pcs)</b><p>Potato &amp; pea or minced beef, with chutney</p></div><span class="p">360</span></div>
+      <div class="mi"><img src="img/ph-wings2.webp" alt=""><div class="t"><b>Peri Wings</b><p>Eight wings, charred, tossed in peri sauce</p></div><span class="p">720</span></div>
+      <div class="mi"><img class="cut" src="img/fries.webp" alt=""><div class="t"><b>Loaded Fries</b><p>Cheese sauce, jalapeño, crispy chicken</p></div><span class="p">480</span></div>
+      <div class="mi"><img src="img/ph-kebabs.webp" alt=""><div class="t"><b>Seekh Kebab Roll</b><p>Charcoal kebab, paratha, mint raita</p></div><span class="p">420</span></div>
+    </div>
+    <div class="menu-panel rv" data-panel="drinks">
+      <div class="mi"><img src="img/ph-milkshake.webp" alt=""><div class="t"><b>Belgian Chocolate Shake</b><p>Thick, cold, topped with whipped cream</p></div><span class="p">450</span></div>
+      <div class="mi"><img src="img/ph-shakes.webp" alt=""><div class="t"><b>Oreo &amp; Caramel Shake</b><p>Crushed cookie, salted caramel</p></div><span class="p">480</span></div>
+      <div class="mi"><img src="img/ph-berry-drink.webp" alt=""><div class="t"><b>Fresh Berry Cooler</b><p>Mixed berries, lemon, sparkling</p></div><span class="p">350</span></div>
+      <div class="mi"><img src="img/ph-snack1.webp" alt=""><div class="t"><b>Karak Chai</b><p>Strong, milky, cardamom — all day</p></div><span class="p">120</span></div>
+    </div>
+
+    <div class="fast-strip">
+      <div class="fs rv"><img src="img/ph-burger-dark.webp" alt="Bacon cheeseburger"><small>Grill</small><b>Burgers</b></div>
+      <div class="fs rv rv-d1"><img src="img/ph-wings.webp" alt="Wings platter"><small>Kitchen</small><b>Wings &amp; grills</b></div>
+      <div class="fs rv rv-d2"><img src="img/ph-snack1.webp" alt="Samosa and chai"><small>Snacks</small><b>Samosa &amp; chai</b></div>
+      <div class="fs rv rv-d3"><img src="img/ph-shakes.webp" alt="Milkshakes"><small>Chilled</small><b>Shakes</b></div>
+      <div class="fs rv rv-d4"><img src="img/ph-ribs.webp" alt="Ribs platter"><small>Family platter</small><b>Sharing boards</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CASH & CARRY ================= -->
+<section class="section room-cc" id="cashcarry">
+  <div class="wrap cc-grid">
+    <div class="cc-photo rv">
+      <img src="img/ph-grocery-aisle.webp" alt="Cash and carry aisle with trolley">
+      <div class="chip chip-a"><b>1,500+</b> products on the floor</div>
+      <div class="chip chip-b"><b>Trade</b> pricing for bulk buyers</div>
+    </div>
+    <div>
+      <p class="eyebrow rv">Cash &amp; Carry</p>
+      <h2 class="display h2 rv rv-d1">Stock the house, <em>feed the crowd.</em></h2>
+      <p class="lead rv rv-d2" style="margin-top:22px">Our cash-and-carry floor carries the ingredients behind everything we make — plus the pantry staples, frozen favourites, drinks and party supplies that families, caterers and small businesses buy in bulk.</p>
+      <div class="cc-list">
+        <div class="rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18l-2 12H5L3 7zM8 7V5a4 4 0 0 1 8 0v2"/></svg><div><b>Bulk sweets &amp; bakery</b><p>Mithai trays, biscuit cartons, bread by the crate</p></div></div>
+        <div class="rv rv-d1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10h16v10H4zM2 10l3-6h14l3 6"/></svg><div><b>Pantry staples</b><p>Rice, flour, ghee, oil, spices and dry fruit</p></div></div>
+        <div class="rv rv-d2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M5 8l7 4 7-4M5 16l7-4 7 4"/></svg><div><b>Frozen &amp; chilled</b><p>Parathas, samosas, kebabs, dairy and desserts</p></div></div>
+        <div class="rv rv-d3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3h8l1 5H7zM7 8h10v13H7z"/></svg><div><b>Beverages &amp; party</b><p>Soft drinks, juices, water and disposables in cases</p></div></div>
+      </div>
+      <div class="hero-ctas rv rv-d4"><a href="#visit" class="btn btn-gold">Trade Enquiries</a><a href="#visit" class="btn btn-ghost">Visit the Floor</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SPECIALS ================= -->
+<section class="section" id="specials" style="padding-top:0">
+  <div class="wrap">
+    <div class="room-head">
+      <div>
+        <p class="eyebrow rv">Special offers</p>
+        <h2 class="display h2 rv rv-d1">This week at <em>Mega.</em></h2>
+      </div>
+      <a href="#visit" class="btn btn-ghost rv rv-d2">View All Specials</a>
+    </div>
+    <div class="specials">
+      <article class="sp rv"><img src="img/ph-mithai-gulab-jamun.webp" alt=""><span class="ribbon gold">Mithai of the month</span><b>Gulab Jamun 1 kg box</b><p>Soft, warm and syrupy. Perfect for gifting.</p><div class="row"><span><span class="was">750</span><span class="now">650</span></span><a href="#visit" class="btn btn-gold" style="padding:10px 18px">Order</a></div></article>
+      <article class="sp rv rv-d1"><img src="img/ph-burger-dark.webp" alt=""><span class="ribbon">Family deal</span><b>2 Pizzas + 4 Burgers + Fries</b><p>Feeds six. Friday to Sunday, dine-in or takeaway.</p><div class="row"><span><span class="was">5,200</span><span class="now">3,999</span></span><a href="#visit" class="btn btn-gold" style="padding:10px 18px">Order</a></div></article>
+      <article class="sp rv rv-d2"><img src="img/ph-cupcake-dark.webp" alt=""><span class="ribbon gold">Birthday bundle</span><b>1 kg cake + 6 cupcakes</b><p>Any flavour. Candles and knife included.</p><div class="row"><span><span class="was">2,700</span><span class="now">2,300</span></span><a href="#visit" class="btn btn-gold" style="padding:10px 18px">Book</a></div></article>
+      <article class="sp rv rv-d3"><img src="img/ph-croissant-1.webp" alt=""><span class="ribbon">Early bird</span><b>Bakery box before 9 AM</b><p>Four croissants, two loaves, one dozen rusks.</p><div class="row"><span><span class="was">1,100</span><span class="now">899</span></span><a href="#visit" class="btn btn-gold" style="padding:10px 18px">Reserve</a></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHY US ================= -->
+<section class="section" id="why" style="padding-top:0">
+  <div class="wrap">
+    <div class="room-head">
+      <div>
+        <p class="eyebrow rv">Why choose us</p>
+        <h2 class="display h2 rv rv-d1">The reasons families <em>keep coming back.</em></h2>
+      </div>
+    </div>
+    <div class="why">
+      <div class="wh rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 0 16 0 8 8 0 0 0-16 0zM12 8v4l3 2"/></svg></div><b>Fresh every day</b><p>Everything on the counter was made today. Unsold bakery and sweets never carry over to tomorrow.</p></div>
+      <div class="wh rv rv-d1"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21V9l9-6 9 6v12zM9 21v-8h6v8"/></svg></div><b>Bakery, sweets &amp; restaurant under one roof</b><p>One stop for the cake, the mithai box, the dinner and the weekly shop. No second trip.</p></div>
+      <div class="wh rv rv-d2"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.6 5.5 6 .8-4.4 4.2 1.1 6L12 16.6 6.7 19.5l1.1-6L3.4 9.3l6-.8z"/></svg></div><b>Quality ingredients</b><p>Real ghee, Belgian chocolate, fresh cream, premium cashews and flour milled for us. No shortcuts.</p></div>
+      <div class="wh rv rv-d3"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 7v13M12 7c-2-3-6-3-6 0M12 7c2-3 6-3 6 0"/></svg></div><b>Made for every occasion</b><p>Eid trays, wedding towers, office platters, birthday bundles and quiet dinners for two.</p></div>
+      <div class="wh rv rv-d4"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19h16M6 19V9a6 6 0 0 1 12 0v10M9 19v-5h6v5"/></svg></div><b>Dine-in, takeaway, delivery</b><p>A spacious family dining room, a fast counter and delivery across town until late.</p></div>
+      <div class="wh rv rv-d4"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 11.5a8.8 8.8 0 1 1-2.6-6.2M22 4l-9 9-3-3"/></svg></div><b>Trusted taste</b><p>Decades of regulars and thousands of celebrations. The same recipes, the same standard, every visit.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="section room-testi" id="reviews">
+  <div class="wrap">
+    <div class="room-head">
+      <div>
+        <p class="eyebrow rv">Customer experience</p>
+        <h2 class="display h2 rv rv-d1">What the <em>regulars</em> say.</h2>
+      </div>
+    </div>
+    <div class="testi">
+      <div class="tc rv"><span class="q">“</span><p>Ordered a three-tier cake for my daughter's engagement and two kilos of kaju katli for the guests. Both were perfect — the cake was the talk of the evening.</p><div class="who"><span class="av">A</span><div><b>Ayesha R.</b><small>Engagement order</small></div><span class="stars" style="margin-left:auto">★★★★★</span></div></div>
+      <div class="tc rv rv-d1"><span class="q">“</span><p>Friday night is Mega night for us. Kids get pizza, we get the grill platter, and we leave with a bakery box for Saturday breakfast. Nowhere else does all three.</p><div class="who"><span class="av">H</span><div><b>Hassan &amp; family</b><small>Weekly dine-in</small></div><span class="stars" style="margin-left:auto">★★★★★</span></div></div>
+      <div class="tc rv rv-d2"><span class="q">“</span><p>We buy our café's bread and rusks from their cash-and-carry every morning. Consistent quality, fair trade pricing, and they never miss an order.</p><div class="who"><span class="av">S</span><div><b>Sana M.</b><small>Café owner, trade customer</small></div><span class="stars" style="margin-left:auto">★★★★★</span></div></div>
+    </div>
+    <div class="rating-bar rv">
+      <div><b class="num">4.9</b><small>Average rating</small></div>
+      <div><b class="num">12k+</b><small>Orders a month</small></div>
+      <div><b class="num">30+</b><small>Years of baking</small></div>
+      <div><b class="num">500</b><small>Seat capacity</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GALLERY ================= -->
+<section class="section" id="gallery" style="padding-top:0">
+  <div class="wrap">
+    <div class="room-head">
+      <div>
+        <p class="eyebrow rv">Gallery</p>
+        <h2 class="display h2 rv rv-d1">A look inside <em>Mega.</em></h2>
+      </div>
+      <p class="lead rv rv-d2">Counters, kitchens and the plates that leave them.</p>
+    </div>
+    <div class="gallery">
+      <figure class="rv"><img src="img/ph-mithai-ladoo-dark.webp" alt="Ladoo by lamplight" loading="lazy"><figcaption>Mithai counter</figcaption></figure>
+      <figure class="rv"><img src="img/ph-pastry-display.webp" alt="Pastry display" loading="lazy"><figcaption>Patisserie</figcaption></figure>
+      <figure class="rv"><img src="img/ph-burger-bacon.webp" alt="Burger" loading="lazy"><figcaption>Grill</figcaption></figure>
+      <figure class="rv"><img src="img/ph-bakery-interior.webp" alt="Bakery interior" loading="lazy"><figcaption>The bakery floor</figcaption></figure>
+      <figure class="rv"><img src="img/ph-cake-display.webp" alt="Cake display" loading="lazy"><figcaption>Cake studio</figcaption></figure>
+      <figure class="rv"><img src="img/ph-donuts-sprinkle.webp" alt="Donuts" loading="lazy"><figcaption>Donuts</figcaption></figure>
+      <figure class="rv"><img src="img/ph-mithai-jalebi.webp" alt="Jalebi" loading="lazy"><figcaption>Jalebi, fried to order</figcaption></figure>
+      <figure class="rv"><img src="img/ph-dining.webp" alt="Dining room" loading="lazy"><figcaption>Family dine-in</figcaption></figure>
+      <figure class="rv"><img src="img/ph-waffle.webp" alt="Waffles" loading="lazy"><figcaption>Dessert bar</figcaption></figure>
+      <figure class="rv"><img src="img/ph-croissant-2.webp" alt="Croissants" loading="lazy"><figcaption>Morning bake</figcaption></figure>
+      <figure class="rv"><img src="img/ph-kebabs.webp" alt="Kebabs" loading="lazy"><figcaption>Charcoal grill</figcaption></figure>
+      <figure class="rv"><img src="img/ph-muffin.webp" alt="Chocolate muffin" loading="lazy"><figcaption>Bakery counter</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA BAND ================= -->
+<section class="cta-band">
+  <img class="orbit o1" src="img/cupcake-pink.webp" alt="" aria-hidden="true">
+  <img class="orbit o2" src="img/pizza-margherita.webp" alt="" aria-hidden="true">
+  <div class="wrap">
+    <p class="eyebrow rv" style="justify-content:center">Hungry yet?</p>
+    <h2 class="display h2 rv rv-d1">Sweet, savoury or both — <em>we're open.</em></h2>
+    <div class="btns rv rv-d2">
+      <a href="#visit" class="btn btn-gold">Order Now</a>
+      <a href="#visit" class="btn btn-ghost">Call the Counter</a>
+      <a href="#visit" class="btn btn-ghost">Message on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="section room-contact" id="visit">
+  <div class="wrap contact-grid">
+    <div class="contact-side">
+      <p class="eyebrow rv">Visit · Order · Contact</p>
+      <h2 class="display h2 rv rv-d1">Come <em>hungry.</em></h2>
+      <div class="info-cards rv rv-d2">
+        <div class="ic-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><div><b>Address</b><span>Main Boulevard, Your City — final address to be confirmed</span></div></div>
+        <div class="ic-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><div><b>Call or WhatsApp</b><span id="phone">+00 000 000 0000</span></div><button class="copy" data-copy="#phone">Copy</button></div>
+        <div class="ic-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><b>Opening hours</b><span>Bakery from 7 AM · Restaurant until midnight · 7 days</span></div></div>
+        <div class="ic-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v12H4zM4 7l8 6 8-6"/></svg><div><b>Email</b><span id="email">hello@megasweetsandbakers.com</span></div><button class="copy" data-copy="#email">Copy</button></div>
+      </div>
+      <div class="map rv rv-d3" aria-label="Map placeholder">
+        <span class="road" style="left:0;right:0;top:46%;height:14px"></span>
+        <span class="road" style="top:0;bottom:0;left:38%;width:10px"></span>
+        <span class="road" style="left:0;right:0;top:78%;height:6px;opacity:.6"></span>
+        <div class="pin"><i></i><b>Mega Sweets &amp; Bakers</b></div>
+        <span class="note">Interactive map goes here once the address is confirmed</span>
+      </div>
+    </div>
+    <form class="form rv rv-d2" id="orderForm" novalidate>
+      <h3>Book a cake, place an order or ask us anything</h3>
+      <div class="row">
+        <label>Your name<input id="f-name" type="text" placeholder="Full name" required></label>
+        <label>Phone<input id="f-phone" type="tel" placeholder="Mobile number" required></label>
+      </div>
+      <label>I'm interested in
+        <select id="f-type"><option>Custom cake</option><option>Mithai gift boxes</option><option>Restaurant order / table booking</option><option>Bakery order</option><option>Cash &amp; carry / trade account</option><option>Something else</option></select>
+      </label>
+      <div class="row">
+        <label>Date needed<input id="f-date" type="date"></label>
+        <label>For how many people?<input id="f-people" type="number" min="1" placeholder="e.g. 12"></label>
+      </div>
+      <label>Details<textarea id="f-msg" placeholder="Flavour, size, design ideas, delivery or collection…"></textarea></label>
+      <button class="btn btn-gold" type="submit" style="justify-content:center">Send Enquiry
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <div class="ok">Thank you — this is a demo form. On the live site your enquiry will reach the Mega team by email and WhatsApp within minutes.</div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#top" class="logo"><span class="logo-mark">M</span><span class="logo-text"><b>Mega</b><span>Sweets &amp; Bakers</span></span></a>
+        <p>Sweets, bakery, cakes, restaurant, fast food and cash &amp; carry — one family food house, open from the first bake to the last order.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4v11a3.5 3.5 0 1 1-3-3.5M14 4a5 5 0 0 0 5 5"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.3-3.8A8.5 8.5 0 1 1 8.2 19z"/><path d="M9 9.5c.5 2.5 2 4 4.5 4.5l1.2-1.2 2 1-.5 1.7c-4 .6-8.1-3.5-7.5-7.5L10.4 8l1 2z"/></svg></a>
+        </div>
+      </div>
+      <div><h4>Explore</h4><ul><li><a href="#mithai">Sweets &amp; Mithai</a></li><li><a href="#cakes">Cakes &amp; Pastries</a></li><li><a href="#bakery">Bakery</a></li><li><a href="#restaurant">Restaurant &amp; Fast Food</a></li><li><a href="#cashcarry">Cash &amp; Carry</a></li></ul></div>
+      <div><h4>Order</h4><ul><li><a href="#visit">Custom cakes</a></li><li><a href="#visit">Gift boxes</a></li><li><a href="#visit">Table booking</a></li><li><a href="#visit">Trade accounts</a></li><li><a href="#specials">Weekly specials</a></li></ul></div>
+      <div><h4>Hours</h4><ul><li>Bakery &amp; sweets: 7 AM – 11 PM</li><li>Restaurant: 11 AM – 12 AM</li><li>Cash &amp; carry: 9 AM – 10 PM</li><li>Open 7 days</li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Mega Sweets &amp; Bakers. All rights reserved.</span>
+      <span>Demo website · Content, pricing and contact details are placeholders pending client approval.</span>
+    </div>
+  </div>
+</footer>
+<div class="demo-tag" aria-hidden="true">Demo preview</div>
+<script src="lib/gsap.min.js"></script>
+<script src="lib/ScrollTrigger.min.js"></script>
+<script src="lib/three.min.js"></script>
+<script src="lib/lenis.min.js"></script>
+<script>
+(function(){
+  const root=document.documentElement; root.classList.add('js');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop=()=>matchMedia('(min-width: 981px)').matches;
+  const hasGsap=typeof gsap!=='undefined';
+  if(hasGsap && typeof ScrollTrigger!=='undefined') gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------- Smooth scroll (Lenis) ---------- */
+  let lenis=null;
+  if(!reduce && typeof Lenis!=='undefined'){
+    lenis=new Lenis({lerp:0.09,smoothWheel:true});
+    if(hasGsap){ lenis.on('scroll',ScrollTrigger.update); gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0); }
+    else{ const raf=t=>{lenis.raf(t);requestAnimationFrame(raf)}; requestAnimationFrame(raf); }
+  }
+  const scrollTo=(target)=>{ const el=document.querySelector(target); if(!el) return;
+    if(lenis) lenis.scrollTo(el,{offset:-70,duration:1.4}); else el.scrollIntoView({behavior:reduce?'auto':'smooth'}); };
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{ const h=a.getAttribute('href'); if(h.length>1 && document.querySelector(h)){ e.preventDefault(); scrollTo(h); closeMenu(); } });
+  });
+
+  /* ---------- Nav ---------- */
+  const nav=document.getElementById('nav');
+  const onScroll=()=>nav.classList.toggle('scrolled',(window.scrollY||0)>40);
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  const burger=document.getElementById('burger'), menu=document.getElementById('mobileMenu');
+  function closeMenu(){ menu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); }
+  burger.addEventListener('click',()=>{ const open=!menu.classList.contains('open'); menu.classList.toggle('open',open); burger.setAttribute('aria-expanded',String(open)); });
+
+  /* ---------- Marquee duplicate ---------- */
+  const mq=document.getElementById('marquee'); mq.innerHTML+=mq.innerHTML;
+
+  /* ---------- Reveal on scroll ---------- */
+  const rv=[...document.querySelectorAll('.rv')];
+  if('IntersectionObserver' in window && !reduce){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    rv.forEach(el=>io.observe(el));
+    // anything already in view at load reveals immediately (first frame is complete)
+    setTimeout(()=>rv.forEach(el=>{ const r=el.getBoundingClientRect(); if(r.top<innerHeight && r.bottom>0) el.classList.add('in'); }),60);
+  } else rv.forEach(el=>el.classList.add('in'));
+
+  /* ---------- Hero headline ---------- */
+  const lines=document.querySelectorAll('.hero-copy .h1 .line > span');
+  if(hasGsap && !reduce){ gsap.to(lines,{y:0,duration:1.3,ease:'power4.out',stagger:.12,delay:.15}); }
+  else lines.forEach(l=>l.style.transform='none');
+
+  /* ---------- Hero 3D ring ---------- */
+  const ringItems=[
+    {src:'img/pizza-pepperoni.webp',tag:'Pizza'},
+    {src:'img/ph-mithai-gulab-jamun.webp',tag:'Gulab Jamun',photo:true},
+    {src:'img/burger-classic.webp',tag:'Burgers'},
+    {src:'img/cupcake-pink.webp',tag:'Cupcakes'},
+    {src:'img/ph-mithai-kaju-katli.webp',tag:'Kaju Katli',photo:true},
+    {src:'img/bread-sour.webp',tag:'Bakery'},
+    {src:'img/ph-donut-stack.webp',tag:'Donuts',photo:true},
+    {src:'img/cake-truffle.webp',tag:'Cakes'},
+    {src:'img/ph-milkshake.webp',tag:'Shakes',photo:true},
+    {src:'img/fries.webp',tag:'Snacks'}
+  ];
+  const ring=document.getElementById('ring'), ringInner=document.getElementById('ringInner'), stage=document.getElementById('stage');
+  function buildRing(){
+    const w=stage.clientWidth; const R=Math.max(170,Math.min(360,w*0.56)); const d=Math.max(84,Math.min(150,w*0.21));
+    ringInner.innerHTML='';
+    ringItems.forEach((it,i)=>{
+      const el=document.createElement('div'); el.className='disc'+(it.photo?' photo':''); el.style.setProperty('--d',d+'px');
+      el.style.transform=`rotateY(${i*(360/ringItems.length)}deg) translateZ(${R}px)`;
+      el.innerHTML=`<img src="${it.src}" alt="" loading="eager"><span class="tag">${it.tag}</span>`;
+      ringInner.appendChild(el);
+    });
+  }
+  buildRing(); addEventListener('resize',()=>{ clearTimeout(buildRing._t); buildRing._t=setTimeout(buildRing,200); });
+  // counter-rotate tags so they stay readable? keep simple: discs face outward, slight billboard not needed.
+  if(!reduce && hasGsap){
+    const qx=gsap.quickTo(ring,'rotationX',{duration:1.2,ease:'power3.out'}), qy=gsap.quickTo(ring,'rotationZ',{duration:1.2,ease:'power3.out'});
+    gsap.set(ring,{xPercent:-50,yPercent:-50,rotationX:-16});
+    stage.closest('.hero').addEventListener('mousemove',e=>{ const r=stage.getBoundingClientRect(); const nx=(e.clientX-(r.left+r.width/2))/r.width, ny=(e.clientY-(r.top+r.height/2))/r.height;
+      qx(-16-ny*10); qy(nx*6); });
+    gsap.from('.disc',{opacity:0,duration:1.2,stagger:.06,delay:.4,ease:'power2.out'});
+    gsap.from('.centerpiece',{opacity:0,scale:.7,duration:1.6,delay:.2,ease:'power3.out',clearProps:'opacity,scale'});
+    gsap.from('.hero-badge',{opacity:0,y:30,duration:1,delay:1.1,stagger:.2,ease:'power3.out'});
+  }
+
+  /* ---------- Sugar-dust particle field (Three.js) ---------- */
+  (function sugar(){
+    const canvas=document.getElementById('sugar'); if(!canvas || typeof THREE==='undefined' || reduce) return;
+    let renderer; try{ renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:false,powerPreference:'low-power'}); }catch(e){ return; }
+    const hero=canvas.parentElement; const scene=new THREE.Scene(); const camera=new THREE.PerspectiveCamera(55,1,0.1,100); camera.position.z=14;
+    const mobile=!isDesktop(); const N=mobile?260:620;
+    const pos=new Float32Array(N*3), sz=new Float32Array(N), ph=new Float32Array(N);
+    for(let i=0;i<N;i++){ pos[i*3]=(Math.random()-.5)*34; pos[i*3+1]=(Math.random()-.5)*20; pos[i*3+2]=(Math.random()-.5)*10; sz[i]=Math.random()<.08?(2.2+Math.random()*2.5):(.4+Math.random()*1.1); ph[i]=Math.random()*Math.PI*2; }
+    const geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.BufferAttribute(pos,3)); geo.setAttribute('aSize',new THREE.BufferAttribute(sz,1)); geo.setAttribute('aPhase',new THREE.BufferAttribute(ph,1));
+    const mat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+      uniforms:{uTime:{value:0},uPR:{value:Math.min(devicePixelRatio,2)}},
+      vertexShader:`attribute float aSize;attribute float aPhase;uniform float uTime;uniform float uPR;varying float vA;
+        void main(){vec3 p=position;p.y+=sin(uTime*.25+aPhase)*.6;p.x+=cos(uTime*.18+aPhase*1.3)*.5;
+        vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;
+        float tw=.55+.45*sin(uTime*1.4+aPhase*3.);vA=tw*(aSize>2.?.35:.9);
+        gl_PointSize=aSize*uPR*(60./-mv.z);}`,
+      fragmentShader:`varying float vA;void main(){float d=length(gl_PointCoord-.5);if(d>.5)discard;float a=smoothstep(.5,.05,d);
+        vec3 c=mix(vec3(.95,.82,.5),vec3(1.,.95,.8),a);gl_FragColor=vec4(c,a*vA);}`});
+    scene.add(new THREE.Points(geo,mat));
+    const clock=new THREE.Clock(); let running=true, visible=true;
+    function size(){ const w=hero.clientWidth,h=hero.clientHeight; renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+    size(); addEventListener('resize',size);
+    new IntersectionObserver(es=>{visible=es[0].isIntersecting},{threshold:0}).observe(hero);
+    document.addEventListener('visibilitychange',()=>{running=!document.hidden});
+    (function loop(){ requestAnimationFrame(loop); if(!running||!visible) return; mat.uniforms.uTime.value=clock.getElapsedTime(); scene.rotation.y=Math.sin(clock.elapsedTime*.05)*.08; renderer.render(scene,camera); })();
+  })();
+
+  /* ---------- Scroll-driven parallax (GSAP) ---------- */
+  if(hasGsap && !reduce && typeof ScrollTrigger!=='undefined'){
+    document.querySelectorAll('.collage figure').forEach(f=>{ const d=parseFloat(f.dataset.depth||.1);
+      gsap.to(f,{yPercent:-d*120,ease:'none',scrollTrigger:{trigger:'.collage',start:'top bottom',end:'bottom top',scrub:true}});
+      gsap.to(f.querySelector('img'),{yPercent:d*60,ease:'none',scrollTrigger:{trigger:'.collage',start:'top bottom',end:'bottom top',scrub:true}}); });
+    document.querySelectorAll('#parade img').forEach(im=>{ const s=parseFloat(im.dataset.speed||1);
+      gsap.fromTo(im,{y:80*s,rotate:(s-1)*10},{y:-40*s,rotate:(1-s)*6,ease:'none',scrollTrigger:{trigger:'#parade',start:'top bottom',end:'bottom top',scrub:true}}); });
+    gsap.to('.hero-stage',{yPercent:18,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+    gsap.to('.hero-copy',{yPercent:12,opacity:.2,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+    document.querySelectorAll('.mithai-hero img, .cc-photo img').forEach(im=>gsap.fromTo(im,{yPercent:-8,scale:1.15},{yPercent:8,scale:1.15,ease:'none',scrollTrigger:{trigger:im.parentElement,start:'top bottom',end:'bottom top',scrub:true}}));
+    gsap.to('.cta-band .o1',{y:-60,ease:'none',scrollTrigger:{trigger:'.cta-band',start:'top bottom',end:'bottom top',scrub:true}});
+    gsap.to('.cta-band .o2',{y:60,ease:'none',scrollTrigger:{trigger:'.cta-band',start:'top bottom',end:'bottom top',scrub:true}});
+  }
+
+  /* ---------- Pinned story ---------- */
+  (function story(){
+    const steps=[...document.querySelectorAll('#steps .step')], shots=[...document.querySelectorAll('#stageFrame .shot')], floats=[...document.querySelectorAll('#stageFrame .float')];
+    const idx=document.getElementById('stageIdx'), title=document.getElementById('stageTitle'); let cur=0;
+    function set(i){ if(i===cur && shots[i].classList.contains('on')) return; cur=i;
+      shots.forEach((s,k)=>s.classList.toggle('on',k===i)); floats.forEach(f=>f.classList.toggle('on',+f.dataset.i===i));
+      steps.forEach((s,k)=>s.classList.toggle('on',k===i)); idx.textContent=String(i+1).padStart(2,'0'); title.innerHTML=steps[i].dataset.title; }
+    if(!('IntersectionObserver' in window)) return;
+    const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting && isDesktop()) set(steps.indexOf(e.target)); }); },{rootMargin:'-45% 0px -45% 0px',threshold:0});
+    steps.forEach(s=>io.observe(s));
+    // on mobile show everything; stage shows first shot
+    const mq=matchMedia('(max-width:980px)'); const apply=()=>{ if(mq.matches){ steps.forEach(s=>s.classList.add('on')); set(0);} }; apply(); mq.addEventListener('change',apply);
+  })();
+
+  /* ---------- 3D tilt on category tiles ---------- */
+  if(isDesktop() && !reduce){
+    document.querySelectorAll('.tilt').forEach(card=>{
+      card.addEventListener('mousemove',e=>{ const r=card.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+        card.style.transform=`perspective(900px) rotateX(${-y*8}deg) rotateY(${x*10}deg) translateY(-6px)`; });
+      card.addEventListener('mouseleave',()=>{ card.style.transform=''; });
+    });
+  }
+
+  /* ---------- Menu tabs ---------- */
+  const tabs=document.querySelectorAll('#menuTabs button'), panels=document.querySelectorAll('.menu-panel');
+  tabs.forEach(b=>b.addEventListener('click',()=>{ tabs.forEach(t=>{t.classList.toggle('on',t===b); t.setAttribute('aria-selected',String(t===b));});
+    panels.forEach(p=>{ const on=p.dataset.panel===b.dataset.tab; p.classList.toggle('on',on); if(on && hasGsap && !reduce) gsap.from(p.children,{opacity:0,y:14,duration:.5,stagger:.06,ease:'power2.out',clearProps:'all'}); }); }));
+
+  /* ---------- Copy buttons ---------- */
+  document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',async()=>{ const el=document.querySelector(b.dataset.copy); const t=el.textContent.trim();
+    try{ await navigator.clipboard.writeText(t); b.textContent='Copied'; }catch(e){ const r=document.createRange(); r.selectNodeContents(el); const s=getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent='Selected'; }
+    setTimeout(()=>b.textContent='Copy',1600); }));
+
+  /* ---------- Form (demo) ---------- */
+  const form=document.getElementById('orderForm');
+  form.addEventListener('submit',e=>{ e.preventDefault(); const name=form.querySelector('#f-name'), phone=form.querySelector('#f-phone'); let ok=true;
+    [name,phone].forEach(i=>{ const bad=!i.value.trim(); i.style.borderColor=bad?'var(--rose)':''; if(bad) ok=false; });
+    if(ok){ form.classList.add('sent'); form.querySelector('.ok').scrollIntoView({block:'nearest',behavior:'smooth'}); } });
+
+  /* ---------- Cursor glow ---------- */
+  const glow=document.getElementById('glow');
+  if(glow && hasGsap && !reduce && matchMedia('(hover:hover)').matches){ const gx=gsap.quickTo(glow,'x',{duration:.6,ease:'power3.out'}), gy=gsap.quickTo(glow,'y',{duration:.6,ease:'power3.out'});
+    addEventListener('mousemove',e=>{gx(e.clientX);gy(e.clientY);},{passive:true}); }
+
+  document.getElementById('year').textContent=new Date().getFullYear();
+  // Refresh scroll triggers once images have loaded (layout shifts)
+  addEventListener('load',()=>{ if(hasGsap && typeof ScrollTrigger!=='undefined') ScrollTrigger.refresh(); });
+})();
+</script>
+
+</body>
+</html>
